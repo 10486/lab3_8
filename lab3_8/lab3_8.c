@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include <malloc.h>
 #include <stdio.h>
 #include <direct.h>
@@ -6,7 +6,7 @@
 #include <stdlib.h>
 int main() {
 	setlocale(LC_ALL, "");
-	printf("Программа начала работу\n");
+	printf("РџСЂРѕРіСЂР°РјРјР° РЅР°С‡Р°Р»Р° СЂР°Р±РѕС‚Сѓ\n");
 #pragma region Declaring vars
 	FILE* file_input;
 	FILE* file_output;
@@ -14,20 +14,20 @@ int main() {
 	char* nums = malloc(sizeof(char) * size);
 	char buffer;
 #pragma endregion
-	// Открываем фалы, выводим сообщение об ошибке если не получилось
+	// РћС‚РєСЂС‹РІР°РµРј С„Р°Р»С‹, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ РµСЃР»Рё РЅРµ РїРѕР»СѓС‡РёР»РѕСЃСЊ
 #pragma region Open files
 	if ((file_input = fopen("INPUT.TXT", "r")) == 0) {
-		printf("Возникла ошибка открытия файла INPUT.TXT");
+		printf("Р’РѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° INPUT.TXT");
 		return;
 	}
 	if ((file_output = fopen("OUTPUT.TXT", "w")) == 0) {
-		printf("Возникла ошибка открытия файла OUTPUT.TXT");
+		printf("Р’РѕР·РЅРёРєР»Р° РѕС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р° OUTPUT.TXT");
 		return;
 	}
 #pragma endregion
-	// Читаем файл пока не наткнемся на конец
+	// Р§РёС‚Р°РµРј С„Р°Р№Р» РїРѕРєР° РЅРµ РЅР°С‚РєРЅРµРјСЃСЏ РЅР° РєРѕРЅРµС†
 	while (fscanf(file_input, "%c", &buffer) != EOF) {
-		// Если дошли до конца строки вписываем все цифры котрые встретили в этой строки и переходим на следующую строку
+		// Р•СЃР»Рё РґРѕС€Р»Рё РґРѕ РєРѕРЅС†Р° СЃС‚СЂРѕРєРё РІРїРёСЃС‹РІР°РµРј РІСЃРµ С†РёС„СЂС‹ РєРѕС‚СЂС‹Рµ РІСЃС‚СЂРµС‚РёР»Рё РІ СЌС‚РѕР№ СЃС‚СЂРѕРєРё Рё РїРµСЂРµС…РѕРґРёРј РЅР° СЃР»РµРґСѓСЋС‰СѓСЋ СЃС‚СЂРѕРєСѓ
 		if (buffer == '\n') {
 			for (size_t i = 0; i < counter; i++)
 			{
@@ -36,29 +36,29 @@ int main() {
 			fprintf(file_output, "\n");
 			counter = 0;
 		}
-		// Если символ в буффере не цифра то сразу переписываем в file_ouput
+		// Р•СЃР»Рё СЃРёРјРІРѕР» РІ Р±СѓС„С„РµСЂРµ РЅРµ С†РёС„СЂР° С‚Рѕ СЃСЂР°Р·Сѓ РїРµСЂРµРїРёСЃС‹РІР°РµРј РІ file_ouput
 		else if (buffer < '0'|| buffer > '9') {
 			fprintf(file_output, "%c", buffer);
 		}
-		// Если цифра кладем в массив
+		// Р•СЃР»Рё С†РёС„СЂР° РєР»Р°РґРµРј РІ РјР°СЃСЃРёРІ
 		else {
 			nums[counter++] = buffer;
-			//nums[counter++]=buffer; удобней в написании чем nums[counter]=buffer; counter++;
+			//nums[counter++]=buffer; СѓРґРѕР±РЅРµР№ РІ РЅР°РїРёСЃР°РЅРёРё С‡РµРј nums[counter]=buffer; counter++;
 		}
-		// Если в массив перестают помещаться цифры увеличиваем его в полтора раза
+		// Р•СЃР»Рё РІ РјР°СЃСЃРёРІ РїРµСЂРµСЃС‚Р°СЋС‚ РїРѕРјРµС‰Р°С‚СЊСЃСЏ С†РёС„СЂС‹ СѓРІРµР»РёС‡РёРІР°РµРј РµРіРѕ РІ РїРѕР»С‚РѕСЂР° СЂР°Р·Р°
 		if (counter + 1 == size)nums = realloc(nums, (size *= 1.5));
 	}
-	// Выводим цифры из последней строки
+	// Р’С‹РІРѕРґРёРј С†РёС„СЂС‹ РёР· РїРѕСЃР»РµРґРЅРµР№ СЃС‚СЂРѕРєРё
 	for (size_t i = 0; i < counter; i++)
 	{
 		fprintf(file_output, "%c", nums[i]);
 	}
-	//Освобождаем память
+	//РћСЃРІРѕР±РѕР¶РґР°РµРј РїР°РјСЏС‚СЊ
 #pragma region Free up memory
 	fclose(file_input);
 	fclose(file_output);
 	free(nums);
 #pragma endregion
-	printf("Работа окончена.");
+	printf("Р Р°Р±РѕС‚Р° РѕРєРѕРЅС‡РµРЅР°.");
 	return 0;
 }
